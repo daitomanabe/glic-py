@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "glic"
+version = "1.0.0"
+description = "GLIC - GLitch Image Codec: Create artistic glitch effects on images"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Daito Manabe", email = "info@rhizomatiks.com"}
+]
+keywords = ["glitch", "art", "image", "codec", "processing", "creative", "visual"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Multimedia :: Graphics :: Graphics Conversion",
+    "Topic :: Artistic Software",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "numpy>=1.20.0",
+    "Pillow>=8.0.0",
+]
+
+[project.optional-dependencies]
+gui = [
+    "gradio>=4.0.0",
+]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov>=2.0",
+    "black>=21.0",
+    "flake8>=3.9",
+    "mypy>=0.900",
+]
+all = [
+    "gradio>=4.0.0",
+    "pytest>=6.0",
+    "pytest-cov>=2.0",
+    "black>=21.0",
+    "flake8>=3.9",
+    "mypy>=0.900",
+]
+
+[project.scripts]
+glic = "glic.__main__:main"
+glic-gui = "glic.gui:main"
+
+[project.urls]
+Homepage = "https://github.com/daito-manabe/glic-py"
+Documentation = "https://github.com/daito-manabe/glic-py#readme"
+Repository = "https://github.com/daito-manabe/glic-py"
+Issues = "https://github.com/daito-manabe/glic-py/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools.package-data]
+glic = ["presets/*.json"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
