@@ -5,7 +5,10 @@
 
 A Python implementation of GLIC - a sophisticated image codec that intentionally creates artistic glitch effects.
 
-![GLIC Example](https://via.placeholder.com/800x300?text=GLIC+Glitch+Art)
+```python
+import glic
+glic.glitch("photo.png", "glitched.png", preset="vhs", intensity=0.7)
+```
 
 ## Features
 
