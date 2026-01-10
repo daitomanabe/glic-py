@@ -279,10 +279,10 @@ glic-py/
 
 ## License
 
-MIT License - see [LICENSE](LICENSE)
+MIT License - Copyright (c) 2025 Daito Manabe
+
+See [LICENSE](LICENSE) for details.
 
 ## Credits
 
-Python port based on the original GLIC C++ implementation.
-
-Original concept: GlitchCodec/GLIC (Java/Processing)
+Based on [GLIC (GLitch Image Codec)](https://github.com/GlitchCodec/GLIC) by GlitchCodec (2017)

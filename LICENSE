@@ -1,6 +1,10 @@
 MIT License
 
-Copyright (c) 2024 Daito Manabe / Rhizomatiks
+Copyright (c) 2025 Daito Manabe
+
+Based on GLIC (GLitch Image Codec)
+Original Copyright (c) 2017 GlitchCodec
+https://github.com/GlitchCodec/GLIC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

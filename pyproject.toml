@@ -9,7 +9,7 @@ description = "GLIC - GLitch Image Codec: Create artistic glitch effects on imag
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "Daito Manabe", email = "info@rhizomatiks.com"}
+    {name = "Daito Manabe"}
 ]
 keywords = ["glitch", "art", "image", "codec", "processing", "creative", "visual"]
 classifiers = [
