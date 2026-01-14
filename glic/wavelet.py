@@ -118,7 +118,8 @@ def convolve_downsample(data: np.ndarray, filter_coef: List[float]) -> np.ndarra
     """Convolve with filter and downsample by 2."""
     n = len(data)
     m = len(filter_coef)
-    output_len = (n + m - 1) // 2
+    # Fix output length to half of input for consistent subband sizes
+    output_len = (n + 1) // 2
 
     result = np.zeros(output_len)
 
@@ -194,37 +195,38 @@ def dwt_2d(data: np.ndarray, wavelet_type: WaveletType) -> Tuple[np.ndarray, np.
     2D Discrete Wavelet Transform (single level).
 
     Returns:
-        Tuple of (LL, LH, HL, HH) subbands
+        Tuple of (LL, LH, HL, HH) subbands, each of size (rows+1)//2 x (cols+1)//2
     """
     rows, cols = data.shape
+    out_rows = (rows + 1) // 2
+    out_cols = (cols + 1) // 2
 
     # Apply DWT to rows
     row_approx = []
     row_detail = []
     for i in range(rows):
         a, d = dwt_1d(data[i, :], wavelet_type)
-        row_approx.append(a)
-        row_detail.append(d)
+        row_approx.append(a[:out_cols])
+        row_detail.append(d[:out_cols])
 
     row_approx = np.array(row_approx)
     row_detail = np.array(row_detail)
 
     # Apply DWT to columns of row transforms
-    new_cols = row_approx.shape[1]
-    LL = np.zeros((rows // 2, new_cols))
-    LH = np.zeros((rows // 2, new_cols))
-    HL = np.zeros((rows // 2, row_detail.shape[1]))
-    HH = np.zeros((rows // 2, row_detail.shape[1]))
+    LL = np.zeros((out_rows, out_cols))
+    LH = np.zeros((out_rows, out_cols))
+    HL = np.zeros((out_rows, out_cols))
+    HH = np.zeros((out_rows, out_cols))
 
-    for j in range(new_cols):
+    for j in range(out_cols):
         a, d = dwt_1d(row_approx[:, j], wavelet_type)
-        LL[:, j] = a[:LL.shape[0]]
-        LH[:, j] = d[:LH.shape[0]]
+        LL[:, j] = a[:out_rows]
+        LH[:, j] = d[:out_rows]
 
-    for j in range(row_detail.shape[1]):
+    for j in range(out_cols):
         a, d = dwt_1d(row_detail[:, j], wavelet_type)
-        HL[:, j] = a[:HL.shape[0]]
-        HH[:, j] = d[:HH.shape[0]]
+        HL[:, j] = a[:out_rows]
+        HH[:, j] = d[:out_rows]
 
     return LL, LH, HL, HH
 
@@ -266,21 +268,23 @@ def fwt_2d(data: np.ndarray, wavelet_type: WaveletType, levels: int = 1) -> np.n
     result = data.copy().astype(np.float64)
     rows, cols = result.shape
 
-    current = result
+    current = result.copy()
     for level in range(levels):
         if current.shape[0] < 2 or current.shape[1] < 2:
             break
 
         LL, LH, HL, HH = dwt_2d(current, wavelet_type)
 
-        # Pack subbands into result
+        # All subbands now have the same size
         h, w = LL.shape
+
+        # Pack subbands into result
         result[:h, :w] = LL
         result[:h, w:2*w] = LH
         result[h:2*h, :w] = HL
         result[h:2*h, w:2*w] = HH
 
-        current = result[:h, :w]
+        current = result[:h, :w].copy()
 
     return result
 
