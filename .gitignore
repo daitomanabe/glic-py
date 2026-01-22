@@ -76,3 +76,17 @@ venv.bak/
 *_glitched.png
 output/
 .claude/
+
+# Test outputs
+test_*.png
+test_*.jpg
+test_*.mp4
+test_input.*
+random_output/
+test_multi_output/
+*_encode_decode_output/
+encode_decode_output/
+segmentation_output/
+*_segmentation_output/
+gif_output/
+*_gif_output/
